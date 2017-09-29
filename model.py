@@ -51,8 +51,8 @@ class Translator(object):
         # 将来替换为record input
         inputs = tf.placeholder(dtype=tf.int32, shape=(FLAGS.batch_size, FLAGS.en_max_length))
         targets = tf.placeholder(dtype=tf.int32, shape=(FLAGS.batch_size, FLAGS.zh_max_length))
-        start_tokens = tf.placeholder(tf.int32, shape=[], name='start_tokens')
-        end_token = tf.placeholder(tf.int32, shape=[], name='end_token')
+        start_tokens = tf.constant(0,dtype=tf.int32)
+        end_token = tf.constant(0,dtype=tf.int32)
         en_len_sequence = tf.placeholder(dtype=tf.int32, shape=FLAGS.batch_size)
         zh_len_sequence = tf.placeholder(dtype=tf.int32, shape=FLAGS.batch_size, name='batch_seq_length')
 
@@ -147,9 +147,9 @@ class Translator(object):
             summary_op = tf.summary.merge_all()
 
             if FLAGS.is_inference:
-                return logits.sample_id,[inputs,en_len_sequence,start_tokens,end_token]
+                return logits.sample_id
             elif FLAGS.is_train:
-                return [global_step,eval,losses,apply_grads_op,summary_op],[inputs,en_len_sequence,targets,zh_len_sequence]
+                return [global_step,eval,losses,apply_grads_op,summary_op]
             else:
                 return [global_step,eval,losses]
 
@@ -169,12 +169,8 @@ class Translator(object):
             else:
                 saver.restore(sess,FLAGS.ckpt_dir+'/model.ckpt')
             for step in range(FLAGS.max_step):
-                en_batch, zh_batch = dataset.nextbatch(is_train=True)
 
-                train_info = sess.run(train_op,feed_dict={feed_list[0]:en_batch.data,
-                                             feed_list[1]:en_batch.len_sequence,
-                                             feed_list[2]:zh_batch.data,
-                                             feed_list[3]:zh_batch.len_sequence})
+                train_info = sess.run(train_op)
                 if train_info[0]%100==0:
                     print(datetime.now()-start)
                     print('\t')

@@ -1,4 +1,0 @@
-numpy
-scikit-image
-enum34
-argparse
