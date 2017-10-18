@@ -17,6 +17,7 @@ import os
 import pynlpir
 import re
 import sys
+from collections import Counter
 import time
 pynlpir.open()
 
@@ -32,6 +33,7 @@ def english_parse(s):
 def build_vocab(filename):
     with open(filename,'r',encoding='utf-8') as file:
         vocab = {}
+        counter=Counter()
         maxLen=0
         if filename.split('.')[-2] == 'zh':
             parse = lambda x: chinese_parse(x)
@@ -51,6 +53,7 @@ def build_vocab(filename):
             if len(line)>maxLen:
                 maxLen = len(line)
             for word in line:
+                counter[word] += 1
                 if word not in vocab:
                     print(word)
                     vocab[word] = idx

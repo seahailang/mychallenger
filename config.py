@@ -61,15 +61,18 @@ tf.app.flags.DEFINE_boolean('is_train',True,
 
 
 '''data dir'''
-tf.app.flags.DEFINE_string("train_dir",'E:\\AI_Challenger\\my_challenge\\zh_en',
+tf.app.flags.DEFINE_string("train_dir",'E:\\AI_Challenger\\ai_challenger_translation_train_20170904\\translation_train_data_20170904',
                            '''train_dir''')
-tf.app.flags.DEFINE_integer('en_vocab_dir','E:\\AI_Challenger\\my_challenge\\vocab.en',
+tf.app.flags.DEFINE_string('en_vocab_dir','E:\\AI_Challenger\\my_challenge\\vocab.en',
                             '''en vocabulary dir''')
-tf.app.flags.DEFINE_integer('zh_vocab_dir','E:\\AI_Challenger\\my_challenge\\vocab.zh',
+tf.app.flags.DEFINE_string('zh_vocab_dir','E:\\AI_Challenger\\my_challenge\\vocab.zh',
                             '''zh vocabulary dir''')
-
-''''''
-
+tf.app.flags.DEFINE_string('val_dir',
+                           '''E:\AI_Challenger\\ai_challenger_translation_validation_20170912\\translation_validation_20170912''',
+                           'validation dir')
+tf.app.flags.DEFINE_string('test_dir',
+                           'E:\\AI_Challenger\\ai_challenger_translation_test_a_20170923',
+                           'test dir')
 
 if __name__ == '__main__':
     pass
